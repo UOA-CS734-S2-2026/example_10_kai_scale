@@ -12,6 +12,12 @@ import { store } from './store';
 // Artificial latency so loading spinners are actually visible in the client.
 const EVENTS_LATENCY_MS = 300;
 
+// Week 10: a pretend slow query. One feed request in fifty takes an extra
+// 800 ms, the way real systems have GC pauses, cold caches and the occasional
+// slow query. The average barely notices; p99 does. Demo 1 measures it.
+const SLOW_SHARE = 0.02;
+const SLOW_EXTRA_MS = 800;
+
 export const rest = Router();
 
 rest.get('/health', (req, res) => {
@@ -19,9 +25,10 @@ rest.get('/health', (req, res) => {
 });
 
 rest.get('/events', (req, res) => {
+  const slow = Math.random() < SLOW_SHARE;
   setTimeout(async () => {
     res.json(await store.events());
-  }, EVENTS_LATENCY_MS);
+  }, EVENTS_LATENCY_MS + (slow ? SLOW_EXTRA_MS : 0));
 });
 
 rest.get('/events/:id', async (req, res) => {
