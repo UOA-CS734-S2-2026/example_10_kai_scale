@@ -19,6 +19,15 @@ import {
 // The single source of truth.
 let events: EventRecord[] = buildEvents();
 
+// Week 10: the seed organisers are made-up accounts nobody can sign in as, so
+// on the in-memory steps no real person could use the dashboard. KAI_ORGANISERS
+// (comma-separated user ids, set in .env) adds real accounts. From step 3 the
+// Firestore store reads the organisers collection instead, as in Week 9.
+const EXTRA_ORGANISERS = (process.env.KAI_ORGANISERS ?? '')
+  .split(',')
+  .map((uid) => uid.trim())
+  .filter(Boolean);
+
 // Every 15 seconds the food runs out a little more, so a client that re-fetches
 // visibly sees the numbers fall and events die during a single lecture.
 function decay(): void {
@@ -51,7 +60,10 @@ export const store: KaiStore = {
   },
 
   async organiser(uid: string): Promise<User | undefined> {
-    return SEED_ORGANISERS.find((u) => u.id === uid);
+    const seeded = SEED_ORGANISERS.find((u) => u.id === uid);
+    if (seeded) return seeded;
+    if (EXTRA_ORGANISERS.includes(uid)) return { id: uid, name: 'Organiser', dept: 'Staff' };
+    return undefined;
   },
 
   // Someone just took one.

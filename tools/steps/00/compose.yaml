@@ -14,6 +14,7 @@ services:
       replicas: 1
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/firebase-key.json
+      KAI_ORGANISERS: ${KAI_ORGANISERS:-}   # in-memory steps: real accounts allowed to organise
     volumes:
       # The service account key, from the path in .env, read-only. It is
       # mounted, never copied into the image: images get pushed and shared.

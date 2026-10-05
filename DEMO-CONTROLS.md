@@ -63,7 +63,7 @@ Three terminals:
 | --- | --- | --- |
 | Before the lecture | `./demo.sh jump 00`, `./demo.sh run`, start the dashboard | The dashboard, as in Week 9 |
 | Demo 1: averages lie | `./demo.sh next`, `./demo.sh run`, then `node scripts/load.mjs` | Average about 350 ms, p50 about 300 ms, p99 over 1,000 ms |
-| Demo 2: two realities | `./demo.sh next`, `./demo.sh run`. Eat a few portions: `node scripts/hammer.mjs 5`. Then `node scripts/who.mjs` and press Refresh on the dashboard a few times | Answers alternate between two replicas, and free-samosas has two different portion counts |
+| Demo 2: two realities | `./demo.sh next`, `./demo.sh run`. Eat a few portions: `node scripts/hammer.mjs 5`. Then `node scripts/who.mjs` and press Refresh on the dashboard a few times. Optional: post an event from the dashboard, then Refresh | Answers alternate between two replicas, and free-samosas has two different portion counts. A posted event appears and disappears |
 | Demo 3: shared store | `./demo.sh next`, `./demo.sh run`, then `node scripts/who.mjs` | One count from both replicas. The logs show a `decay tick` from each replica every 15 s |
 | Demo 3, the fix | `./demo.sh next`, `./demo.sh run` | Only the `ticker` service logs decay ticks |
 | Demo 4: one greedy user | `./demo.sh next`, `./demo.sh run`, then `node scripts/hammer.mjs` | Four 200s, then 429 with Retry-After |
@@ -74,6 +74,10 @@ changed.
 
 ## If something goes wrong
 
+- **"Ask an admin to add this user id to the organisers collection"**: on steps
+  0 to 2, put that id in `KAI_ORGANISERS` in `.env`, then `./demo.sh run`. On
+  step 3 and later, add a document with that id to the `organisers` collection
+  in the Firebase console (fields `name` and `dept`), as in Week 9.
 - **502 Bad Gateway**: `docker compose restart gateway`.
 - **The dashboard shows "Could not reach the Kai server"**: `docker compose ps`;
   wait until the api replicas say `(healthy)`.

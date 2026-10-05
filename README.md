@@ -33,10 +33,14 @@ You need the same Firebase project and service account key as example_10.
 1. `cp .env.example .env` and set `GOOGLE_APPLICATION_CREDENTIALS` to the
    absolute path of your service account key. Compose mounts it into the
    containers read-only; it is never copied into the image.
-2. `cp web/.env.example web/.env.local` and fill in the web app config, as in
+2. In the same `.env`, set `KAI_ORGANISERS` to your own Firebase user id. Sign
+   in on the dashboard at step 0 and the "not an organiser" screen shows it.
+   This is only for the in-memory steps (0 to 2); from step 3, as in Week 9,
+   your id needs a document in Firestore's `organisers` collection.
+3. `cp web/.env.example web/.env.local` and fill in the web app config, as in
    example_10. Leave `VITE_KAI_SERVER=http://localhost:3734`.
-3. `npm --prefix web install`
-4. If the Firestore data is not seeded yet: `npm --prefix server install` and
+4. `npm --prefix web install`
+5. If the Firestore data is not seeded yet: `npm --prefix server install` and
    `npm --prefix server run seed`.
 
 Nothing else needs installing on your machine: the server's dependencies are
