@@ -62,12 +62,12 @@ Three terminals:
 | Lecture moment | Do this | The room sees |
 | --- | --- | --- |
 | Before the lecture | `./demo.sh jump 00`, `./demo.sh run`, start the dashboard | The dashboard, as in Week 9 |
-| Demo 1: averages lie | `./demo.sh next`, `./demo.sh run`, then `node scripts/load.mjs` | Average about 320 ms, p99 over 1,000 ms |
-| Demo 2: two realities | `./demo.sh next`, `./demo.sh run`. Eat a few portions: `node scripts/hammer.mjs 4`. Then `node scripts/who.mjs` and press Refresh on the dashboard a few times | Answers alternate between two replicas, and free-samosas has two different portion counts |
+| Demo 1: averages lie | `./demo.sh next`, `./demo.sh run`, then `node scripts/load.mjs` | Average about 350 ms, p50 about 300 ms, p99 over 1,000 ms |
+| Demo 2: two realities | `./demo.sh next`, `./demo.sh run`. Eat a few portions: `node scripts/hammer.mjs 5`. Then `node scripts/who.mjs` and press Refresh on the dashboard a few times | Answers alternate between two replicas, and free-samosas has two different portion counts |
 | Demo 3: shared store | `./demo.sh next`, `./demo.sh run`, then `node scripts/who.mjs` | One count from both replicas. The logs show a `decay tick` from each replica every 15 s |
 | Demo 3, the fix | `./demo.sh next`, `./demo.sh run` | Only the `ticker` service logs decay ticks |
 | Demo 4: one greedy user | `./demo.sh next`, `./demo.sh run`, then `node scripts/hammer.mjs` | Four 200s, then 429 with Retry-After |
-| Demo 5: caching | At step 5, `node scripts/load.mjs`. Then `./demo.sh next`, `./demo.sh run`, `node scripts/load.mjs` | Throughput up, p99 down, and the api answered only a few dozen requests |
+| Demo 5: caching | At step 5, `node scripts/load.mjs`. Then `./demo.sh next`, `./demo.sh run`, `node scripts/load.mjs` | Throughput up several times, p50 from about 300 ms to about 10 ms, and the api answered only a handful of requests |
 
 `git diff` between neighbouring tags shows the room exactly what each step
 changed.

@@ -38,19 +38,16 @@ commit step-01-measure "Step 1: one feed request in fifty is slow; measure perce
 
 # --- 2: two replicas, each with its own array -------------------------------
 restore
-rm -f scripts/hammer.mjs
 variant 02
 commit step-02-replicas "Step 2: two replicas, each with its own in-memory events"
 
 # --- 3: the one-line switch to Firestore, and the ticker runs twice ---------
 restore
-rm -f scripts/hammer.mjs
 variant 03
 commit step-03-shared-store "Step 3: one shared store (Firestore); now two decay tickers"
 
 # --- 4: the decay ticker runs in exactly one process ------------------------
 restore
-rm -f scripts/hammer.mjs
 variant 04
 commit step-04-one-ticker "Step 4: DECAY=off in the replicas, one ticker service"
 

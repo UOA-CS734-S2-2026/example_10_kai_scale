@@ -64,10 +64,10 @@ needs port 3734.
 | --- | --- | --- |
 | `step-00-start` | The server in a container, one replica, behind the gateway. In-memory store | Act 1 start |
 | `step-01-measure` | One feed request in fifty takes 800 ms longer; `scripts/load.mjs` | Demo 1: averages lie |
-| `step-02-replicas` | `replicas: 2`. Each replica has its own array | Demo 2: two realities |
+| `step-02-replicas` | `replicas: 2`. Each replica has its own array; `who.mjs` and `hammer.mjs` | Demo 2: two realities |
 | `step-03-shared-store` | The one-line switch to Firestore in `store.ts`. Now two decay tickers | Demo 3: one reality, double decay |
 | `step-04-one-ticker` | `DECAY=off` in the replicas; one `ticker` service | Demo 3, the fix |
-| `step-05-rate-limit` | The gateway limits eatPortion: a small burst, then 429 | Demo 4: one greedy user |
+| `step-05-rate-limit` | The gateway limits eatPortion: a small burst, then 429. `hammer.mjs` now gets refused | Demo 4: one greedy user |
 | `step-06-cache` | `Cache-Control` on the feed; the gateway caches it for 2 s | Demo 5: caching |
 
 Every change is visible as a diff. For example:

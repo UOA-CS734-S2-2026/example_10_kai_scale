@@ -1,10 +1,11 @@
-// Demo 4: one greedy user tapping "eat" as fast as they can.
+// One greedy user tapping "eat" as fast as they can.
 //
 //   node scripts/hammer.mjs                     15 eats on free-samosas
+//   node scripts/hammer.mjs 5                   5 eats (Demo 2: watch which replica)
 //   node scripts/hammer.mjs 30 pizza-night      30 eats on pizza-night
 //
-// Before step 5 every one succeeds. From step 5 the gateway allows a small
-// burst, then answers 429 Too Many Requests with a Retry-After header.
+// Before step 5 every one succeeds. From step 5 (Demo 4) the gateway allows a
+// small burst, then answers 429 Too Many Requests with a Retry-After header.
 
 const COUNT = Number(process.argv[2] ?? 15);
 const EVENT = process.argv[3] ?? "free-samosas";
