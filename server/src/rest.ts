@@ -26,6 +26,9 @@ rest.get('/health', (req, res) => {
 
 rest.get('/events', (req, res) => {
   const slow = Math.random() < SLOW_SHARE;
+  // Week 10: the feed is public (Week 9) and the same for everyone, so any
+  // cache, including the gateway's, may keep a copy for 2 seconds.
+  res.set('Cache-Control', 'public, max-age=2');
   setTimeout(async () => {
     res.json(await store.events());
   }, EVENTS_LATENCY_MS + (slow ? SLOW_EXTRA_MS : 0));
