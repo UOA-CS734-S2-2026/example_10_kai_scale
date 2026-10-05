@@ -84,6 +84,13 @@ git diff step-04-one-ticker step-05-rate-limit -- gateway/
 `./demo.sh list` shows the steps. See `DEMO-CONTROLS.md` for the full
 running order, and `tools/build-steps.sh` for how the tags are built.
 
+## Portions run out
+
+The decay ticker empties the seed events in a few minutes. On the in-memory
+steps, `./demo.sh run` starts fresh. From step 3, refill Firestore with
+`docker compose exec api node_modules/.bin/tsx src/seed.ts` (not `POST /reset`,
+which also removes non-seed organisers). See `DEMO-CONTROLS.md`.
+
 ## A note on Firestore reads
 
 From step 3 the feed comes from Firestore, and Firestore bills reads: each

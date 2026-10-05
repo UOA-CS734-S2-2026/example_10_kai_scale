@@ -4,7 +4,7 @@ if (-not (Test-Path ".env")) {
   Write-Host "No .env here. Copy .env.example to .env and set GOOGLE_APPLICATION_CREDENTIALS."
   exit 1
 }
-docker compose up -d --build --remove-orphans
+docker compose up -d --build --force-recreate --remove-orphans
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 docker compose restart gateway
 Write-Host ""

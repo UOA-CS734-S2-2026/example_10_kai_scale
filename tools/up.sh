@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # ./demo.sh run: bring the stack up as the current step describes it.
 #
-# Rebuilds the api image (a step may have changed server code), starts or
-# recreates whatever changed, removes services this step no longer has,
-# restarts the gateway so nginx sees the current replicas, then follows the
-# logs. Ctrl+C stops following; the containers keep running.
+# Rebuilds the api image (a step may have changed server code), recreates every
+# container from scratch, removes services this step no longer has, restarts
+# the gateway so nginx sees the current replicas, then follows the logs.
+# Ctrl+C stops following; the containers keep running.
+#
+# Recreating everything means each run starts with full portions on the
+# in-memory steps: the decay ticker empties the seed events in a few minutes.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -13,7 +16,7 @@ if [ ! -f .env ]; then
   exit 1
 fi
 
-docker compose up -d --build --remove-orphans
+docker compose up -d --build --force-recreate --remove-orphans
 # nginx resolves "api" once, at startup. In the cloud, learning about new
 # replicas automatically is called service discovery.
 docker compose restart gateway

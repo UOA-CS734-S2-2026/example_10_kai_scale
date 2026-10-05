@@ -39,9 +39,10 @@ Moving between steps **discards any changes you have made**. `.env` and
 Unlike earlier examples, the server now runs in containers, and a container
 does not notice when files change on your disk. So after `next`, run `run`:
 
-1. `docker compose up -d --build --remove-orphans` rebuilds the server image if
-   the step changed server code, recreates the containers that changed, and
-   removes services the step no longer has.
+1. `docker compose up -d --build --force-recreate --remove-orphans` rebuilds the
+   server image if the step changed server code, recreates every container
+   from scratch, and removes services the step no longer has. Recreating means
+   the in-memory steps always start with full portions.
 2. `docker compose restart gateway`, because nginx looks up the replicas'
    addresses when it starts.
 3. `docker compose logs -f`. Ctrl+C stops following the logs; the containers
@@ -71,6 +72,25 @@ Three terminals:
 
 `git diff` between neighbouring tags shows the room exactly what each step
 changed.
+
+## Portions run out: refilling
+
+The decay ticker takes 0 to 2 portions from every event every 15 seconds, and
+the seed events start small, so they empty in a few minutes.
+
+- **Steps 0 to 2 (in memory):** `./demo.sh run` again. Fresh containers, full
+  portions.
+- **Step 3 onward (Firestore):** run the example_10 seed script inside a
+  container. It refills the six events and leaves your organiser document
+  alone:
+
+  ```
+  docker compose exec api node_modules/.bin/tsx src/seed.ts
+  ```
+
+  Do this just before Demo 3, and again before Act 2 on Tuesday. Do **not** use
+  `POST /reset` for this: it also deletes every organiser that is not one of
+  the four seeds, including your own account.
 
 ## If something goes wrong
 
