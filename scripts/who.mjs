@@ -5,7 +5,7 @@
 const N = Number(process.argv[2] ?? 6);
 const EVENT = process.argv[3] ?? "free-samosas";
 for (let i = 0; i < N; i += 1) {
-  const res = await fetch("http://localhost:3734/events", { cache: "no-store" });
+  const res = await fetch("http://localhost:8080/api/events", { cache: "no-store" });
   const list = await res.json();
   const e = list.find((x) => x.id === EVENT);
   const cache = res.headers.get("x-cache-status");

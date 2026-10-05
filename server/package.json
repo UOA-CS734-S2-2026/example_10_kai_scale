@@ -18,13 +18,13 @@
     "dotenv": "17.4.2",
     "express": "5.2.1",
     "firebase-admin": "14.2.0",
-    "graphql": "16.14.2"
+    "graphql": "16.14.2",
+    "tsx": "4.23.6"
   },
   "devDependencies": {
     "@types/cors": "2.8.19",
     "@types/express": "5.0.6",
     "@types/node": "20.19.43",
-    "tsx": "4.23.6",
     "typescript": "5.9.3"
   }
 }

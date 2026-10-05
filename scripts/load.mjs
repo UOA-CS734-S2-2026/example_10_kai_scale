@@ -2,7 +2,7 @@
 //
 //   node scripts/load.mjs                      1000 requests, 50 at a time
 //   node scripts/load.mjs 2000 100             2000 requests, 100 at a time
-//   node scripts/load.mjs 1000 50 http://localhost:3734/events
+//   node scripts/load.mjs 1000 50 http://localhost:8080/api/events
 //
 // Firestore bills reads. Once the feed comes from Firestore (step 3 on), each
 // uncached request is one read per event: 1,000 requests is about 6,000
@@ -13,7 +13,7 @@
 
 const TOTAL = Number(process.argv[2] ?? 1000);
 const CONCURRENCY = Number(process.argv[3] ?? 50);
-const URL_ = process.argv[4] ?? "http://localhost:3734/events";
+const URL_ = process.argv[4] ?? "http://localhost:8080/api/events";
 
 const times = [];
 const statuses = {};

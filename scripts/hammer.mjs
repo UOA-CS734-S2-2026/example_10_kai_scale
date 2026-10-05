@@ -4,12 +4,12 @@
 //   node scripts/hammer.mjs 5                   5 eats (Demo 2: watch which replica)
 //   node scripts/hammer.mjs 30 pizza-night      30 eats on pizza-night
 //
-// Before step 5 every one succeeds. From step 5 (Demo 4) the gateway allows a
+// Before step 5 every one succeeds. From step 5 (Demo 4) nginx in web allows a
 // small burst, then answers 429 Too Many Requests with a Retry-After header.
 
 const COUNT = Number(process.argv[2] ?? 15);
 const EVENT = process.argv[3] ?? "free-samosas";
-const url = `http://localhost:3734/events/${EVENT}/eat`;
+const url = `http://localhost:8080/api/events/${EVENT}/eat`;
 
 let ok = 0;
 let limited = 0;

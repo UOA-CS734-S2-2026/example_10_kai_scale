@@ -1,40 +1,35 @@
-# Kai Finder, scaled. Lecture 18's demos are the steps of this repo:
-# ./demo.sh next, then ./demo.sh run.
-#
-# The gateway owns port 3734, the port the dashboard already talks to
-# (VITE_KAI_SERVER), so the dashboard needs no change at all. The api
-# replicas have no ports of their own: the only way in is through the gateway.
+# Lab 06's compose.yaml, scaled. Week 10 adds three things to the api:
+# the Firebase key (example_10's server needs it), KAI_ORGANISERS, and,
+# step by step, replicas, DECAY and a ticker service.
 
 services:
   api:
     build: ./server
-    image: kai-scale-api
-    init: true
+    # Step 2: two replicas. They cannot both own port 3734 on your machine,
+    # so the api has no ports: the only way in is through web.
     deploy:
-      replicas: 2              # step 2: one became two
+      replicas: 2
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/firebase-key.json
-      KAI_ORGANISERS: ${KAI_ORGANISERS:-}   # in-memory steps: real accounts allowed to organise
+      KAI_ORGANISERS: ${KAI_ORGANISERS:-}
     volumes:
-      # The service account key, from the path in .env, read-only. It is
-      # mounted, never copied into the image: images get pushed and shared.
+      # The service account key, from the path in .env, read-only. Mounted,
+      # never copied into the image: images get pushed and shared.
       - type: bind
         source: ${GOOGLE_APPLICATION_CREDENTIALS:?Copy .env.example to .env and set the key path}
         target: /run/secrets/firebase-key.json
         read_only: true
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3734/health"]
-      interval: 3s
-      timeout: 2s
-      retries: 10
+      interval: 5s
+      timeout: 3s
+      retries: 5
       start_period: 5s
 
-  gateway:
-    image: nginx:1.27-alpine
+  web:
+    build: ./web
     ports:
-      - "3734:80"
-    volumes:
-      - ./gateway/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - "8080:80"
     depends_on:
       api:
         condition: service_healthy

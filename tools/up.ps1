@@ -6,10 +6,10 @@ if (-not (Test-Path ".env")) {
 }
 docker compose up -d --build --force-recreate --remove-orphans
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-docker compose restart gateway
+docker compose restart web
 Write-Host ""
 docker compose ps
 Write-Host ""
-Write-Host "Gateway on http://localhost:3734 (the dashboard's VITE_KAI_SERVER)."
+Write-Host "Dashboard on http://localhost:8080, and the api through it at /api/."
 Write-Host "Following logs. Ctrl+C stops following; the containers keep running."
 docker compose logs -f --tail=3

@@ -24,11 +24,11 @@ variant () { cp -R "tools/steps/$1/." .; }
 
 echo "Building steps:"
 
-# --- 0: the example_10 server in a container, one replica, behind nginx ------
+# --- 0: Lab 06's setup, with the example_10 server and dashboard ------------
 restore
 rm -f scripts/load.mjs scripts/who.mjs scripts/hammer.mjs
 variant 00
-commit step-00-start "Step 0: the example_10 server in a container, one replica, behind the gateway"
+commit step-00-start "Step 0: Lab 06's setup (api and web) with the example_10 apps"
 
 # --- 1: a pretend slow query, and a load test that measures percentiles ------
 restore
@@ -39,7 +39,7 @@ commit step-01-measure "Step 1: one feed request in fifty is slow; measure perce
 # --- 2: two replicas, each with its own array -------------------------------
 restore
 variant 02
-commit step-02-replicas "Step 2: two replicas, each with its own in-memory events"
+commit step-02-replicas "Step 2: two replicas, each with its own in-memory events; the api port goes"
 
 # --- 3: the one-line switch to Firestore, and the ticker runs twice ---------
 restore
@@ -51,14 +51,14 @@ restore
 variant 04
 commit step-04-one-ticker "Step 4: DECAY=off in the replicas, one ticker service"
 
-# --- 5: rate limiting eatPortion at the gateway ------------------------------
+# --- 5: nginx rate-limits eatPortion ----------------------------------------
 restore
 variant 05
-commit step-05-rate-limit "Step 5: the gateway rate-limits eatPortion"
+commit step-05-rate-limit "Step 5: nginx rate-limits eatPortion"
 
-# --- 6: the gateway caches the public feed -----------------------------------
+# --- 6: nginx caches the public feed ----------------------------------------
 restore
-commit step-06-cache "Step 6: the gateway caches the public feed for 2 seconds"
+commit step-06-cache "Step 6: nginx caches the public feed for 2 seconds"
 
 git checkout -q main
 git branch -qD build-steps-tmp

@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.env
+.env.*
+# Week 10: the dashboard now signs in with Firebase, and the build needs that
+# config. VITE_ values end up in the browser bundle anyway, so they are public
+# configuration, not secrets: let the build read .env.local.
+!.env.local
+.firebase
+*.md
+Dockerfile
+.dockerignore

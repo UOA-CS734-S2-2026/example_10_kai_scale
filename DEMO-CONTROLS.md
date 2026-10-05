@@ -43,28 +43,28 @@ does not notice when files change on your disk. So after `next`, run `run`:
    server image if the step changed server code, recreates every container
    from scratch, and removes services the step no longer has. Recreating means
    the in-memory steps always start with full portions.
-2. `docker compose restart gateway`, because nginx looks up the replicas'
+2. `docker compose restart web`, because nginx looks up the replicas'
    addresses when it starts.
 3. `docker compose logs -f`. Ctrl+C stops following the logs; the containers
    keep running.
 
-The dashboard (`npm --prefix web run dev`) never needs restarting.
+The dashboard is at http://localhost:8080 throughout; reload the page after each run.
 
 ## Running order
 
-Three terminals:
+Two terminals and a browser:
 
 1. `./demo.sh run`: the containers, and their logs
-2. `npm --prefix web run dev`: the dashboard on 5734
-3. the repo root, for `node scripts/...` and `git diff`
+2. the repo root, for `node scripts/...` and `git diff`
+3. the browser on http://localhost:8080: the dashboard
 
 ## Lecture 18, step by step
 
 | Lecture moment | Do this | The room sees |
 | --- | --- | --- |
-| Before the lecture | `./demo.sh jump 00`, `./demo.sh run`, start the dashboard | The dashboard, as in Week 9 |
+| Before the lecture | `./demo.sh jump 00`, `./demo.sh run`, open http://localhost:8080 | The dashboard, as in Week 9, served from the `web` container as in Lab 06 |
 | Demo 1: averages lie | `./demo.sh next`, `./demo.sh run`, then `node scripts/load.mjs` | Average about 350 ms, p50 about 300 ms, p99 over 1,000 ms |
-| Demo 2: two realities | `./demo.sh next`, `./demo.sh run`. Eat a few portions: `node scripts/hammer.mjs 5`. Then `node scripts/who.mjs` and press Refresh on the dashboard a few times. Optional: post an event from the dashboard, then Refresh | Answers alternate between two replicas, and free-samosas has two different portion counts. A posted event appears and disappears |
+| Demo 2: two realities | `./demo.sh next`, `./demo.sh run`. Eat a few portions: `node scripts/hammer.mjs 5`. Then `node scripts/who.mjs` and press Refresh on the dashboard (localhost:8080) a few times. Optional: post an event from the dashboard, then Refresh | Answers alternate between two replicas, and free-samosas has two different portion counts. A posted event appears and disappears |
 | Demo 3: shared store | `./demo.sh next`, `./demo.sh run`, then `node scripts/who.mjs` | One count from both replicas. The logs show a `decay tick` from each replica every 15 s |
 | Demo 3, the fix | `./demo.sh next`, `./demo.sh run` | Only the `ticker` service logs decay ticks |
 | Demo 4: one greedy user | `./demo.sh next`, `./demo.sh run`, then `node scripts/hammer.mjs` | Four 200s, then 429 with Retry-After |
@@ -98,12 +98,12 @@ the seed events start small, so they empty in a few minutes.
   0 to 2, put that id in `KAI_ORGANISERS` in `.env`, then `./demo.sh run`. On
   step 3 and later, add a document with that id to the `organisers` collection
   in the Firebase console (fields `name` and `dept`), as in Week 9.
-- **502 Bad Gateway**: `docker compose restart gateway`.
+- **502 Bad Gateway**: `docker compose restart web`.
 - **The dashboard shows "Could not reach the Kai server"**: `docker compose ps`;
   wait until the api replicas say `(healthy)`.
 - **"Copy .env.example to .env"**: the key path is missing from `.env`.
-- **Port 3734 already in use**: a server from an earlier example is still
-  running. Stop it.
+- **Port 3734 or 8080 already in use**: a server from an earlier example, or
+  the Lab 06 containers, are still running. Stop them.
 - **Start completely clean**: `docker compose down`, `./demo.sh jump 00`,
   `./demo.sh run`.
 
