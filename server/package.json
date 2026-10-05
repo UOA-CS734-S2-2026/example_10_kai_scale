@@ -1,0 +1,30 @@
+{
+  "name": "kai_server_auth",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "description": "COMPSCI 734 Kai Events server: REST + GraphQL over Firestore, with Firebase Authentication",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "seed": "tsx src/seed.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/server": "5.5.1",
+    "@as-integrations/express5": "1.1.2",
+    "cors": "2.8.6",
+    "dotenv": "17.4.2",
+    "express": "5.2.1",
+    "firebase-admin": "14.2.0",
+    "graphql": "16.14.2",
+    "tsx": "4.23.6"
+  },
+  "devDependencies": {
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.6",
+    "@types/node": "20.19.43",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,11 @@
+# Credentials and local config. Ignored files also survive demo step changes.
+.env
+.env.local
+*.local
+**/serviceAccountKey*.json
+.firebaserc
+
+node_modules
+dist
+.DS_Store
+.idea/

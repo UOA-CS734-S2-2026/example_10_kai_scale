@@ -1,0 +1,33 @@
+# Lab 06's compose.yaml, scaled. Week 10 adds three things to the api:
+# the Firebase key (example_10's server needs it), KAI_ORGANISERS, and,
+# step by step, replicas, DECAY and a ticker service.
+
+services:
+  api:
+    build: ./server
+    ports:
+      - "3734:3734"
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/firebase-key.json
+      KAI_ORGANISERS: ${KAI_ORGANISERS:-}
+    volumes:
+      # The service account key, from the path in .env, read-only. Mounted,
+      # never copied into the image: images get pushed and shared.
+      - type: bind
+        source: ${GOOGLE_APPLICATION_CREDENTIALS:?Copy .env.example to .env and set the key path}
+        target: /run/secrets/firebase-key.json
+        read_only: true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3734/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  web:
+    build: ./web
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy

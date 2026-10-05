@@ -1,0 +1,215 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "▶️ Demo: Next Step",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "next"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "next"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "◀️ Demo: Previous Step",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "prev"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "prev"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📚 Demo: List All Steps",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "list"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "list"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🎯 Demo: Jump to Step",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "jump",
+        "${input:stepTag}"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "jump",
+          "${input:stepTag}"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🏠 Demo: Go to step 1",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "jump",
+        "00"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "jump",
+          "00"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🏁 Demo: Back to main",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "reset"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "reset"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🌐 Demo: Run dev server",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "run"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "run"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "🗑️ Demo: Discard Changes",
+      "type": "shell",
+      "command": "${workspaceFolder}/demo.sh",
+      "args": [
+        "discard-changes"
+      ],
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-File",
+          "${workspaceFolder}/demo.ps1",
+          "discard-changes"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔁 Demo: Rebuild step tags",
+      "type": "shell",
+      "command": "${workspaceFolder}/tools/build-steps.sh",
+      "args": [],
+      "windows": {
+        "command": "bash",
+        "args": [
+          "${workspaceFolder}/tools/build-steps.sh"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "stepTag",
+      "type": "promptString",
+      "description": "Enter step number (e.g., 03, 08):",
+      "default": "01"
+    }
+  ]
+}
