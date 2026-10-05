@@ -48,9 +48,18 @@ app.use(
   }),
 );
 
+// Week 10: the decay ticker is scheduled work, and scheduled work must run
+// ONCE, not once per replica. Request-handling replicas run with DECAY=off;
+// a single ticker service (compose.yaml) leaves it on.
+const DECAY_ON = process.env.DECAY !== 'off';
+
 app.listen(PORT, () => {
   console.log(`${REPLICA} listening on port ${PORT} (store: ${STORE_NAME})`);
   console.log(`GraphQL and Apollo Sandbox at http://localhost:${PORT}/graphql`);
-  console.log(`Portions decay every ${DECAY_INTERVAL_MS / 1000} seconds.`);
-  store.startDecay();
+  if (DECAY_ON) {
+    console.log(`Portions decay every ${DECAY_INTERVAL_MS / 1000} seconds.`);
+    store.startDecay();
+  } else {
+    console.log('Decay ticker off in this process (DECAY=off).');
+  }
 });
