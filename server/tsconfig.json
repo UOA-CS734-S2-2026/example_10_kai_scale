@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2023"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node"],
+
+    "strict": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    // There is no build step: tsx runs the TypeScript directly, and tsc is
+    // here only to type-check. That is also why imports need no .js suffix.
+    "noEmit": true
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,69 @@
+# COMPSCI 734 - GraphQL operations for the Kai Events server. Paste these into
+# Apollo Sandbox at http://localhost:3734/graphql.
+
+# The feed.
+query Feed {
+  events {
+    name
+    portionsLeft
+    postedBy {
+      name
+      dept
+    }
+  }
+}
+
+# Same endpoint, different screen: the map wants coordinates.
+query MapPins {
+  events {
+    name
+    lat
+    lng
+    portionsLeft
+  }
+}
+
+# An argument, supplied through Sandbox's variables panel.
+# Variables: { "activeOnly": true }
+query ActiveFeed($activeOnly: Boolean!) {
+  events(activeOnly: $activeOnly) {
+    name
+    portionsLeft
+  }
+}
+
+# A write, which returns the new state in the same round trip.
+# Variables: { "id": "free-samosas" }
+mutation Eat($id: ID!) {
+  eatPortion(id: $id) {
+    name
+    portionsLeft
+    isActive
+  }
+}
+
+# postEvent needs a token. In Apollo
+# Sandbox, open the Headers tab and add
+#   Authorization: Bearer <paste a token from the dashboard's token panel>
+# Without it you get 401 "Sign in first."
+#
+# Post a new event. The write lands in Firestore, so
+# every phone watching the map sees the pin appear; then the server sends one
+# notification to the kai-events topic, so every phone that is NOT watching
+# hears about it too.
+#
+# Background the app before running this, or the banner never draws.
+mutation PostEvent {
+  postEvent(
+    name: "Kai bowls"
+    location: "The quad"
+    emoji: "🍲"
+    portions: 20
+    lat: -36.8525
+    lng: 174.7687
+  ) {
+    id
+    name
+    portionsLeft
+  }
+}
