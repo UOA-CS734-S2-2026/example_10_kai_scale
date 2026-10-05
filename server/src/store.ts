@@ -4,9 +4,7 @@
 // out of the process and into a database. Everything else - both REST routes
 // and every GraphQL resolver - imports from here and never learns the
 // difference.
-//
-// Week 10 starts from the in-memory store on purpose: the events live in an
-// array inside this process, the way they did in example_05. One process,
-// one array, no problem. Watch what happens at step 2.
 
-export { store, STORE_NAME } from './store-memory';
+// Week 10, step 3: back to Firestore. With two replicas, an array in each
+// process meant two different answers; one shared database means one.
+export { store, STORE_NAME } from './store-firestore';
