@@ -5,8 +5,10 @@
 services:
   api:
     build: ./server
-    ports:
-      - "3734:3734"
+    # Step 2: two replicas. They cannot both own port 3734 on your machine,
+    # so the api has no ports: the only way in is through web.
+    deploy:
+      replicas: 2
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/firebase-key.json
       KAI_ORGANISERS: ${KAI_ORGANISERS:-}
